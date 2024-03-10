@@ -1,6 +1,9 @@
 name = "myapp"
 compatibility_date = "2023-12-01"
 
+[ai]
+binding = "AI"
+
 # [vars]
 # MY_VARIABLE = "production_value"
 

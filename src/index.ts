@@ -1,9 +1,18 @@
-import { Hono } from 'hono'
+import { Hono } from 'hono';
+import { Ai } from '@cloudflare/ai';
 
-const app = new Hono()
+type Bindings = {
+  AI: string;
+};
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono<{ Bindings: Bindings }>();
 
-export default app
+app.get('/', async (c) => {
+  const ai = new Ai(c.env.AI);
+  const response = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
+    prompt: 'Is this coffee?',
+  });
+  return c.json({ response });
+});
+
+export default app;
